@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block actions %}
+    <script type="text/javascript">
+        INGREDIENTS = [
+{% for ingredient in ingredients %}'{{ ingredient }}'{% if not loop.last %},{% endif %}{% endfor %}
+        ];
+        TAGS = [
+{% for tag in tags %}'{{ tag }}'{% if not loop.last %},{% endif %}{% endfor %}
+        ];
+        function activate_autocomplete() {
+            $("input.ingredient").autocomplete({
+                source: INGREDIENTS,
+                select: function(event, ui) {
+                    $(this).after("<input type=\"text\" class=\"ingredient\" /><br />");
+                    activate_autocomplete();
+                    update_recipe_list();
+                }
+            });
+        }
+        function update_recipe_list() {
+            var time_below = $("input[name='time_below']").val();
+            var ingredients = [];
+            $('input.ingredient').each(function() {
+                if($.trim($(this).val()) != '') {
+                    ingredients.push($(this).val());
+                }
+            });
+            var tag = $("input[name='tag']").val();
+
+            $("a.recipe").each(function() {
+                var show = true;
+                if(time_below != '') {
+                    if(parseInt($(this).attr('data-total-time')) < time_below) {
+                        show = true;
+                    } else {
+                        show = false;
+                    }
+                }
+
+                if(tag != '' && $(this).attr('data-tags').indexOf('|'+tag+'|') == -1)
+                    show = false;
+
+                for(var i in ingredients) {
+                    if($(this).attr('data-ingredients').indexOf('|'+ingredients[i]+'|') == -1)
+                        show = false;
+                }
+
+                if(show) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        $(function() {
+            $("input[name='time_below']").on('keyup', update_recipe_list);
+            $("input[name='tag']").autocomplete({
+                source: TAGS,
+                select: function(event, ui) {
+                    update_recipe_list();
+                }
+            });
+            $("#actions").on('blur', 'input', function() {
+                var empties = $('input.ingredient').filter(function() { return $(this).val() == '' }).slice(1);
+                empties.remove();
+                update_recipe_list();
+            });
+            activate_autocomplete();
+        });
+    </script>
+    <h1>Filtrér</h1>
+    Tid under <input type="text" name="time_below" class="only-numbers" style="width: 30px;" maxlength="3" /> minutter<br />
+    Tag <input type="text" name="tag" /><br />
+    Påkrævede ingredienser:<br />
+    <input type="text" class="ingredient" /><br />
+{% endblock %}
+
+{% block navigation %}
+    <a href="/recipe/new">Tilføj</a>
+{% endblock %}
+
+{% block contents %}
+    {% for recipe in recipes %}
+    <a class="recipe {{ recipe.image_orientation }}" href="/recipe/{{ recipe.id }}"
+        data-total-time="{{ recipe.total_time() }}"
+        data-ingredients="{% for ingredient in recipe.ingredients %}|{{ ingredient.name }}{% endfor %}|"
+        data-tags="{% for tag in recipe.tags %}|{{ tag.name }}{% endfor %}|"
+        style="background-image: url(/static/images/{% if recipe.image %}{{ recipe.image }}{% else %}no-picture.png{% endif %});"
+    >
+        <div class="name">{{ recipe.name }}</div>
+    </a>
+    {% endfor %}
+{% endblock %}

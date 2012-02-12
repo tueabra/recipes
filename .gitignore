@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+bin/
+include/
+lib/
+recipes/static/images/*
+!recipes/static/images/no-picture.png

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block actions %}
+{% endblock %}
+
+{% block navigation %}
+    {% if recipe %}
+        <a href="/recipe/{{ recipe.id }}">Tilbage</a>
+    {% else %}
+        <a href="/">Tilbage</a>
+    {% endif %}
+    <a href="/recipe/{{ recipe.id }}/delete" onclick="return confirm('Vil du virkelig slette denne opskrift?');">Slet</a>
+{% endblock %}
+
+{% block contents %}
+
+    <script type="text/javascript">
+        INGREDIENTS = [
+{% for ingredient in ingredients %}'{{ ingredient }}'{% if not loop.last %},{% endif %}{% endfor %}
+        ];
+        TAGS = [
+{% for tag in tags %}'{{ tag }}'{% if not loop.last %},{% endif %}{% endfor %}
+        ];
+        TIMINGS = [
+{% for timing in timings %}'{{ timing }}'{% if not loop.last %},{% endif %}{% endfor %}
+        ];
+        function update_autocomplete() {
+            $("input[name='ingredient_name']").autocomplete({
+                source: INGREDIENTS
+            });
+            $("input[name='tag_name']").autocomplete({
+                source: TAGS
+            });
+            $("input[name='timing_description']").autocomplete({
+                source: TIMINGS
+            });
+        }
+        $(function() {
+            $('a.add-element').on('click', function() {
+                var inputcell = $(this).closest('th').next('td');
+                var template = inputcell.find('div').first().clone();
+                template.find("input[type='hidden']").remove();
+                template.find("input").val('').attr('value', '');
+                inputcell.append(template);
+                update_autocomplete();
+            });
+            update_autocomplete();
+        });
+    </script>
+
+    {% if recipe %}
+        <h1>Redigér {{ recipe.name }}</h1>
+    {% else %}
+        <h1>Ny opskrift</h1>
+    {% endif %}
+
+    <form method="POST" action="">
+
+    <table class="invisible">
+
+        <tr>
+            <th>Navn</th>
+            <td><input type="text" name="name" value="{{ recipe.name }}" /></td>
+        </tr>
+
+        <tr>
+            <th>Tags [<a href="#" class="add-element">tilføj</a>]</th>
+            <td>
+        {% if recipe.tags %}
+            {% for tag in recipe.tags %}
+                <div>
+                    <input type="hidden" name="tag_id" value="{{ tag.id }}" />
+                    <input type="text" name="tag_name" value="{{ tag.name }}" />
+                </div>
+            {% endfor %}
+        {% else %}
+                <div>
+                    <input type="text" name="tag_name" />
+                </div>
+        {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Antal personer</th>
+            <td><input type="text" name="persons" class="only-numbers" value="{{ recipe.persons }}" /><td>
+        </tr>
+
+        <tr>
+            <th>Tid [<a href="#" class="add-element">tilføj</a>]</th>
+            <td>
+        {% if recipe.timings %}
+            {% for timing in recipe.timings %}
+                <div>
+                    <input type="hidden" name="timing_id" value="{{ timing.id }}" />
+                    <input type="text" name="timing_description" value="{{ timing.description }}" />:
+                    <input type="text" name="timing_minutes" class="only-numbers" maxlength="3" style="width: 30px;" value="{{ timing.minutes }}" /> minutter<br />
+                </div>
+            {% endfor %}
+        {% else %}
+                <div>
+                    <input type="text" name="timing_description" />:
+                    <input type="text" name="timing_minutes" class="only-numbers" maxlength="3" style="width: 30px;" /> minutter
+                </div>
+        {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Ingredienser [<a href="#" class="add-element">tilføj</a>]</th>
+            <td>
+        {% if recipe.ingredients %}
+            {% for ingredient in recipe.ingredients %}
+                <div>
+                    <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}" />
+                    Mængde <input type="text" name="ingredient_amount" style="width: 70px;" value="{{ ingredient.amount }}" />
+                    af <input type="text" name="ingredient_name" value="{{ ingredient.name }}" />
+                </div>
+            {% endfor %}
+        {% else %}
+                <div>
+                    Mængde <input type="text" name="ingredient_amount" style="width: 70px;" />
+                    af <input type="text" name="ingredient_name" />
+                </div>
+        {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Opskrift</th>
+            <td><textarea cols="50" rows="7" name="recipe">{{ recipe.recipe }}</textarea></td>
+        </tr>
+
+        <tr>
+            <th>Tilbehør</th>
+            <td><textarea cols="50" rows="3" name="garniture">{{ recipe.garniture }}</textarea></td>
+        </tr>
+
+        <tr>
+            <th>&nbsp;</th>
+            <td><input type="submit" value="Gem" /></td>
+        </tr>
+    </table>
+
+    </form>
+
+{% endblock %}

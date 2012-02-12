@@ -1,0 +1,107 @@
+body, html {
+    xheight: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: verdana;
+    font-size: 9pt;
+    background-color: #383736;
+    color: white;
+    overflow: hidden;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+h1 {
+    margin: 0 0 5px 0;
+    color: #DDD; 
+    border-bottom: 1px #555 solid;
+}
+h2 {
+    color: #BBB;
+}
+input {
+    border: black solid 1px;
+}
+#container {
+    width: 100%;
+}
+#actions {
+    width: 200px;
+    height: 100%;
+    min-height: 100%;
+    float: left;
+    background-color: #212121;
+    padding: 5px;
+    box-shadow: 1px 0px 3px 0px #000000;
+    margin-right: 5px;
+}
+
+#content {
+    height: 100%;
+    overflow-x: auto;
+}
+
+.recipe {
+    border: black solid 1px;
+    margin: 5px;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 1px 1px 5px 0px #000000;
+}
+.recipe.vertical { 
+    width: 180px;
+    height: 240px;
+}
+.recipe.horizontal { 
+    height: 180px;
+    width: 240px;
+}
+.recipe:hover {
+    box-shadow: 0px 0px 7px 2px #FFF;
+}
+
+.recipe .name {
+    background-color: black;
+    color: white;
+    height: 25px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    opacity: 0.6;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+#navigation {
+    position: fixed;
+    bottom: 5px;
+}
+#navigation a {
+    display: inline-block;
+    padding: 5px;
+    background-color: silver;
+    border: black solid 1px;
+    color: black;
+}
+#navigation a:hover {
+    background-color: gray;
+}
+
+#actions img {
+    border: black solid 1px;
+}
+#actions img.horizontal {
+    width: 198px;
+    height: 149px;
+}
+#actions img.vertical {
+    width: 198px;
+    height: 264px;
+}
