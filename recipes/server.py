@@ -9,7 +9,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(ROOT_DIR, 'static')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s/recipes.db' % ROOT_DIR
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root@localhost/recipes'
 db = SQLAlchemy(app)
 
 if app.config['DEBUG']:

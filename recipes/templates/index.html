@@ -83,7 +83,7 @@
 
 {% block contents %}
     {% for recipe in recipes %}
-    <a class="recipe {{ recipe.image_orientation }}" href="/recipe/{{ recipe.id }}"
+    <a class="recipe {% if recipe.image_orientation %}{{ recipe.image_orientation }}{% else %}vertical{% endif %}" href="/recipe/{{ recipe.id }}"
         data-total-time="{{ recipe.total_time() }}"
         data-ingredients="{% for ingredient in recipe.ingredients %}|{{ ingredient.name }}{% endfor %}|"
         data-tags="{% for tag in recipe.tags %}|{{ tag.name }}{% endfor %}|"

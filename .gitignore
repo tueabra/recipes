@@ -3,6 +3,7 @@
 bin/
 include/
 lib/
+build/
 recipes/static/images/*
 !recipes/static/images/no-picture.png
 recipes/recipes.db
