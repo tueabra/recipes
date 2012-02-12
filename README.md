@@ -2,6 +2,10 @@
 
 recipes is a simple to-the-point recipe database, slightly optimized for tablet usage.
 
+Please note that is a very simple project, written for personal use only.
+
+All the text is currently in danish, and the design has not been polished yet.
+
 ## Set up
 
 Clone the repository:
