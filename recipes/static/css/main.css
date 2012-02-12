@@ -1,25 +1,33 @@
 body, html {
-    xheight: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #383736;
+    overflow: hidden;
+}
+body,html,table {
+    color: white;
     font-family: verdana;
     font-size: 9pt;
-    background-color: #383736;
-    color: white;
-    overflow: hidden;
 }
 a {
     color: white;
     text-decoration: none;
 }
 h1 {
-    margin: 0 0 5px 0;
+    margin: 0 0 10px 0;
     color: #DDD; 
-    border-bottom: 1px #555 solid;
+    border-bottom: 1px #803a3a solid;
 }
 h2 {
     color: #BBB;
+    border-bottom: 1px #5d5f72 solid;
+}
+h3 {
+    margin: 0 0 5px 0;
+    color: #DDD; 
+    border-bottom: 1px #5d5f72 solid;
+    
 }
 input {
     border: black solid 1px;
@@ -96,6 +104,7 @@ input {
 
 #actions img {
     border: black solid 1px;
+    cursor: pointer;
 }
 #actions img.horizontal {
     width: 198px;
@@ -104,4 +113,15 @@ input {
 #actions img.vertical {
     width: 198px;
     height: 264px;
+}
+table.invisible th {
+    text-align: left;
+    vertical-align: top;
+}
+table.invisible td {
+    padding-left: 10px;
+}
+table.invisible a {
+    color: #b82b2b;
+    font-weight: normal;
 }
