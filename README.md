@@ -14,7 +14,7 @@ Install the required packages (if needed):
 
 Create the database needed:
 
-    $ cd recipes.git/recipes/
+    $ cd recipes/recipes/
     $ python -c "from server import db; db.create_all();"
 
 Run the recipe server:
