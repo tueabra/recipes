@@ -10,7 +10,7 @@ Clone the repository:
 
 Install the required packages (if needed):
 
-    $ pip -r requirements.txt
+    $ pip install -r requirements.txt
 
 Create the database needed:
 
