@@ -1,8 +1,5 @@
 *.pyc
 *.swp
-bin/
-include/
-build/
-share/
 recipes/static/media/*
 recipes/recipes.db
+recipes/settings.py

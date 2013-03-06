@@ -4,7 +4,7 @@ recipes is a simple to-the-point recipe database, slightly optimized for tablet 
 
 Please note that is a very simple project, written for personal use only.
 
-All the text is currently in danish, and the design has not been polished yet.
+All the text is currently in danish.
 
 ## Set up
 
@@ -19,10 +19,10 @@ Install the required packages (if needed):
 Create the database needed:
 
     $ cd recipes/recipes/
-    $ python -c "from server import db; db.create_all();"
+    $ python server.py initdb
 
 Run the recipe server:
 
-    $ python server.py
+    $ python server.py runserver
 
 Now recipes should be running on http://localhost:5000/. Hosting via apache or nginx is recommended.

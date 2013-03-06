@@ -1,4 +1,5 @@
 import os
+import sys
 
 from PIL import Image, ImageOps
 
@@ -16,6 +17,14 @@ STATIC_DIR = os.path.join(ROOT_DIR, 'static')
 
 app = Flask(__name__)
 
+# DEFAULT CONFIGURATION
+
+app.config['DEBUG'] = True
+app.config['SERVER_HOST'] = '0.0.0.0'
+app.config['SERVER_PORT'] = 5000
+app.config['DATABASE'] = 'sqlite:///recipes.db'
+app.config.from_object('settings')
+
 if app.config['DEBUG']:
     from werkzeug import SharedDataMiddleware
     app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
@@ -24,39 +33,21 @@ if app.config['DEBUG']:
 
 # SQLALCHEMY TABLES
 
-engine = create_engine('sqlite:///recipes.db', convert_unicode=True)
+engine = create_engine(app.config['DATABASE'], convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-"""
-def init_db():
-    # import all modules here that might define models so that
-    # they will be registered properly on the metadata.  Otherwise
-    # you will have to import them first before calling init_db()
-    import yourapplication.models
-    Base.metadata.create_all(bind=engine)
-"""
-
 @app.teardown_request
 def shutdown_session(exception=None):
     db_session.remove()
-
-"""
-class RecipeGarniture(Base):
-    __tablename__ = 'recipe_garniture'
-    id = Column(Integer, primary_key=True)
-    recipe_id = Column(Integer, ForeignKey('recipe.id'))
-    garniture_id = Column(Integer, ForeignKey('recipe.id'))
-"""
 
 recipe_garniture = Table('recipe_garniture', Base.metadata,
     Column('recipe_id', Integer, ForeignKey('recipe.id')),
     Column('garniture_id', Integer, ForeignKey('recipe.id'))
 )
-
 
 class Recipe(Base):
     __tablename__ = 'recipe'
@@ -202,12 +193,28 @@ def api_image_preview():
 
     return jsonify(image=base64.b64encode(out.getvalue()))
 
-# VIEWS
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0')
+
+    def print_help():
+        print """Recipe Database Management
+
+usage: %s [-h] <command>
+
+commands:
+  runserver  run the development server
+  initdb     create the database and tables
+""" % sys.argv[0]
+
+    if len(sys.argv) == 1:
+        print_help()
+    elif sys.argv[1] == 'runserver':
+        app.debug = app.config['DEBUG']
+        app.run(host=app.config['SERVER_HOST'], port=app.config['SERVER_PORT'])
+    elif sys.argv[1] == 'initdb':
+        Base.metadata.create_all(bind=engine)
+    else:
+        print_help()
