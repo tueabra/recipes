@@ -1,101 +1,25 @@
-{% extends "base.html" %}
+<html ng-app="Recipes">
+    <head>
+        <title>Recipes</title>
+        <link rel="stylesheet" href="/static/css/main.css" type="text/css" /> 
+        <link rel="stylesheet" href="/static/css/smoothness/jquery-ui-1.8.13.custom.css" type="text/css" /> 
+        <script type="text/javascript" src="/static/lib/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/static/lib/jquery-ui-1.8.13.custom.min.js"></script>
+        <!--
+        <script type="text/javascript" src="/static/js/main.js"></script>
+        -->
+    </head>
+    <body>
 
-{% block actions %}
-    <script type="text/javascript">
-        INGREDIENTS = [
-{% for ingredient in ingredients %}'{{ ingredient }}'{% if not loop.last %},{% endif %}{% endfor %}
-        ];
-        TAGS = [
-{% for tag in tags %}'{{ tag }}'{% if not loop.last %},{% endif %}{% endfor %}
-        ];
-        function activate_autocomplete() {
-            $("input.ingredient").autocomplete({
-                source: INGREDIENTS,
-                select: function(event, ui) {
-                    $(this).after("<input type=\"text\" class=\"ingredient\" /><br />");
-                    activate_autocomplete();
-                    update_recipe_list();
-                }
-            });
-        }
-        function update_recipe_list() {
-            var time_below = $("input[name='time_below']").val();
-            var ingredients = [];
-            $('input.ingredient').each(function() {
-                if($.trim($(this).val()) != '') {
-                    ingredients.push($(this).val());
-                }
-            });
-            var tag = $("input[name='tag']").val();
+        <div id="container" ng-view> </div>
 
-            $("a.recipe").each(function() {
-                var show = true;
-                if(time_below != '') {
-                    if(parseInt($(this).attr('data-total-time')) < time_below) {
-                        show = true;
-                    } else {
-                        show = false;
-                    }
-                }
+        <script type="text/javascript" src="/static/lib/angular.js"></script>
+        <script type="text/javascript" src="/static/lib/angular-resource.js"></script>
 
-                if(tag != '' && $(this).attr('data-tags').indexOf('|'+tag+'|') == -1)
-                    show = false;
+        <script type="text/javascript" src="/static/js/app.js"></script>
+        <script type="text/javascript" src="/static/js/services.js"></script>
+        <script type="text/javascript" src="/static/js/controllers.js"></script>
+        <script type="text/javascript" src="/static/js/directives.js"></script>
+    </body>
+</html>
 
-                for(var i in ingredients) {
-                    if($(this).attr('data-ingredients').indexOf('|'+ingredients[i]+'|') == -1)
-                        show = false;
-                }
-
-                if(show) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }
-
-        $(function() {
-            $("input[name='time_below']").on('keyup', update_recipe_list);
-            $("input[name='tag']").autocomplete({
-                source: TAGS,
-                select: function(event, ui) {
-                    update_recipe_list();
-                }
-            });
-            $("#actions").on('blur', 'input', function() {
-                var empties = $('input.ingredient').filter(function() { return $(this).val() == '' }).slice(1);
-                empties.remove();
-                update_recipe_list();
-            });
-            activate_autocomplete();
-        });
-    </script>
-
-    <h1>Filter</h1>
-
-    <h3>Tid</h3>
-    Under <input type="text" name="time_below" class="only-numbers" style="width: 30px;" maxlength="3" /> minutter<br />
-
-    <h3>Tag</h3>
-    <input type="text" name="tag" /><br />
-
-    <h3>Ingredienser</h3>
-    <input type="text" class="ingredient" /><br />
-{% endblock %}
-
-{% block navigation %}
-    <a href="/recipe/new">Tilføj</a>
-{% endblock %}
-
-{% block contents %}
-    {% for recipe in recipes %}
-    <a class="recipe {% if recipe.image_orientation %}{{ recipe.image_orientation }}{% else %}vertical{% endif %}" href="/recipe/{{ recipe.id }}"
-        data-total-time="{{ recipe.total_time() }}"
-        data-ingredients="{% for ingredient in recipe.ingredients %}|{{ ingredient.name }}{% endfor %}|"
-        data-tags="{% for tag in recipe.tags %}|{{ tag.name }}{% endfor %}|"
-        style="background-image: url(/static/images/{% if recipe.image %}{{ recipe.image }}{% else %}no-picture.png{% endif %});"
-    >
-        <div class="name">{{ recipe.name }}</div>
-    </a>
-    {% endfor %}
-{% endblock %}

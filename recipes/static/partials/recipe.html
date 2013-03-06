@@ -1,0 +1,58 @@
+<div id="actions">
+    <a href="#/" id="button-frontpage"></a>
+    <a href="#/recipe/{{ recipe.id }}/edit" id="button-edit"></a>
+</div>
+
+<div id="content">
+
+    <img ng-show="recipe.image" ng-src="{{ getImage(recipe, false) }}" class="recipe-image" />
+
+    <h1>
+      {{ recipe.name }}
+      <a ng-click="toggleFavorite()" style="font-size: 10px;"><span ng-hide="recipe.favorite">Not </span>Favorite</a>
+      <a ng-click="toggleTried()" style="font-size: 10px;">Has <span ng-hide="recipe.has_tried">Not </span>Tried</a>
+    </h1>
+
+    <div ng-show="recipe.tags">
+        <small><span ng-repeat="tag in recipe.tags">{{ tag.name }}<span ng-show="!$last">, </span></span></small>
+    </div>
+
+    <h2>Information</h2>
+
+    <div ng-show="recipe.persons">
+        <b>Antal personer:</b> {{ recipe.persons }}<br />
+    </div>
+
+    <div ng-show="recipe.timings">
+        <b>Tid:</b> (samlet: <b>{{ recipe.total_time() }}</b> minutter)<br />
+        <div ng-repeat="timing in recipe.timings">
+            {{ timing.description }}: {{ timing.minutes }} minutter
+        </div>
+    </div>
+
+    <div ng-show="recipe.ingredients">
+        <h2>Ingredienser</h2>
+        <div ng-repeat="ingredient in recipe.ingredients">{{ ingredient.amount }} {{ ingredient.name }}</div>
+    </div>
+
+    <div ng-show="recipe.recipe">
+        <h2>Opskrift</h2>
+        {{ recipe.recipe }}
+    </div>
+
+    <div ng-show="recipe.garniture || garnitures">
+        <h2>Tilbehør</h2>
+        {{ recipe.garniture }}
+        <div ng-repeat="garniture in garnitures">
+          <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
+        </div>
+    </div>
+
+    <div ng-show="as_garniture">
+        <h2>Kan bruges til</h2>
+        <div ng-repeat="garniture in as_garniture">
+          <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
+        </div>
+    </div>
+
+</div>

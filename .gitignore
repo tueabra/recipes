@@ -4,6 +4,6 @@ bin/
 include/
 lib/
 build/
-recipes/static/images/*
-!recipes/static/images/no-picture.png
+share/
+recipes/static/media/*
 recipes/recipes.db

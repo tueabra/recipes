@@ -1,0 +1,18 @@
+<div id="actions">
+  <a href="#/add" id="button-add-recipe" title="Tilføj opskrift"></a>
+  <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" />
+</div>
+
+<div id="content">
+
+  <a ng-repeat="recipe in recipes" ng-show="matchesFilter(recipe)" ng-class="{recipe: true, horizontal: recipe.image_orientation == 'horizontal', vertical: recipe.image_orientation != 'horizontal', favorite: recipe.favorite }" href="#/recipe/{{ recipe.id }}"
+    data-total-time="{{ recipe.total_time() }}"
+    ng-style="getImage(recipe)"
+  >
+    <div class="name-streamer">
+      <div class="background"></div>
+      <div class="name">{{ recipe.name }}</div>
+    </div>
+  </a>
+
+</div>

@@ -7,8 +7,8 @@ body, html {
 }
 body,html,table {
     color: white;
-    font-family: verdana;
-    font-size: 9pt;
+    font-family: Arial;
+    font-size: 10pt;
 }
 a {
     color: white;
@@ -16,12 +16,14 @@ a {
 }
 h1 {
     margin: 0 0 10px 0;
-    color: #DDD; 
+    color: #EEE; 
     border-bottom: 1px #803a3a solid;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
 }
 h2 {
-    color: #BBB;
+    color: #CCC;
     border-bottom: 1px #5d5f72 solid;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
 }
 h3 {
     margin: 0 0 5px 0;
@@ -32,88 +34,74 @@ h3 {
 input {
     border: black solid 1px;
 }
-#container {
-    width: 100%;
-}
 #actions {
-    width: 200px;
-    height: 100%;
-    min-height: 100%;
-    float: left;
-    background-color: #212121;
-    padding: 5px;
-    box-shadow: 1px 0px 3px 0px #000000;
+    width: 100%;
+    background-color: #A8A598;
+    padding: 5px 5px 0 5px;
     margin-right: 5px;
+    height: 34px;
+    border-bottom: black solid 1px;
+}
+
+#actions a {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
 }
 
 #content {
-    height: 100%;
-    overflow-x: auto;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #383736;
 }
 
 .recipe {
-    border: black solid 1px;
-    margin: 5px;
     position: relative;
-    border-radius: 5px;
     cursor: pointer;
     display: inline-block;
-    box-shadow: 1px 1px 5px 0px #000000;
-}
-.recipe.vertical { 
+    height: 240px;
     width: 180px;
+    background-position: center center;
+}
+.recipe.favorite {
+    width: 360px;
     height: 240px;
 }
-.recipe.horizontal { 
-    height: 180px;
-    width: 240px;
-}
-.recipe:hover {
-    box-shadow: 0px 0px 7px 2px #FFF;
-}
 
-.recipe .name {
-    background-color: black;
-    color: white;
-    height: 25px;
+.recipe .name-streamer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    opacity: 0.6;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
     text-align: center;
     padding-top: 5px;
+}
+.recipe .name-streamer .background {
+    background-color: black;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.6;
+}
+
+.recipe:hover .name-streamer .background {
+    background-color: #800000;
+}
+
+.recipe .name-streamer .name {
+    color: white;
+    height: 35px;
     font-weight: bold;
+    position: relative;
+    text-shadow: 1px 1px 0 rgba(100, 100, 100, 1)
 }
 
-#navigation {
-    position: fixed;
-    bottom: 5px;
-}
-#navigation a {
-    display: inline-block;
-    padding: 5px;
-    background-color: silver;
-    border: black solid 1px;
-    color: black;
-}
-#navigation a:hover {
-    background-color: gray;
-}
-
-#actions img {
-    border: black solid 1px;
-    cursor: pointer;
-}
-#actions img.horizontal {
-    width: 198px;
-    height: 149px;
-}
-#actions img.vertical {
-    width: 198px;
-    height: 264px;
-}
 table.invisible th {
     text-align: left;
     vertical-align: top;
@@ -124,4 +112,38 @@ table.invisible td {
 table.invisible a {
     color: #b82b2b;
     font-weight: normal;
+}
+
+#button-add-recipe {
+    background: url(/static/images/plus.png);
+}
+#button-frontpage {
+    background: url(/static/images/home.png);
+}
+#button-recipe {
+    background: url(/static/images/recipe.png);
+}
+#button-edit {
+    background: url(/static/images/plus.png);
+}
+#button-delete {
+    background: url(/static/images/delete.png);
+}
+
+.recipe-image {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    border: black solid 1px;
+    background-position: center center;
+}
+
+#filter {
+    float: right;
+    margin-right: 10px;
+    width: 300px;
+    height: 25px;
+    border-radius: 5px;
+    padding-left: 5px;
+    background-color: #E6E6E6;
 }
