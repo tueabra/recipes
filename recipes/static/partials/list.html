@@ -7,7 +7,7 @@
           <li><a href="#/add">Tilføj</a></li>
         </ul>
         <form class="navbar-form pull-right">
-          <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" />
+          <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" ng-change="groupRecipes()" />
         </form>
       </div>
     </div>
@@ -16,16 +16,22 @@
 
 <div class="container">
 
-  <div ng-repeat="recipe in recipes" ng-show="matchesFilter(recipe)" ng-class="{thumbnail: true, span3: true, recipe: true, favorite: recipe.favorite }">
-  <a class="" href="#/recipe/{{ recipe.id }}"
-    data-total-time="{{ recipe.total_time() }}"
-    ng-style="getImage(recipe)"
-  >
-  </a>
-  <div class="name-streamer">
-    <div class="background"></div>
-    <div class="name">{{ recipe.name }}</div>
-  </div>
+  <div class="row" ng-repeat="group in groupedRecipes">
+    <div ng-repeat="recipe in group" ng-show="matchesFilter(recipe)" class="span4 recipe">
+      <div class="thumbnail">
+        <div ng-show="recipe.favorite" class="star" title="Favorit"></div>
+        <div ng-hide="recipe.has_tried" class="untried" title="Ikke prøvet"></div>
+        <a class="" href="#/recipe/{{ recipe.id }}"
+          data-total-time="{{ recipe.total_time() }}"
+          ng-style="getImage(recipe)"
+        >
+        </a>
+        <div class="name-streamer">
+          <div class="background"></div>
+          <div class="name">{{ recipe.name }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

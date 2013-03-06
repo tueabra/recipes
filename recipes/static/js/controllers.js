@@ -4,28 +4,12 @@ function ListCtrl($scope, $rootScope, Recipe) {
     $scope.recipes = [];
     Recipe.query(function(data) {
        $scope.recipes = data.objects; 
+       $scope.groupRecipes();
     });
 
-    function resizeRecipes() {
-        var width = ($("#content").innerWidth() - 15);
-        var precise = width / 220;
-        var ceil = Math.ceil(precise);
-        var rounded = width / ceil;
-        var floor = Math.floor(rounded);
-
-        $('.recipe:not(.favorite)').animate({ width: floor }, 'fast');
-        $('.recipe.favorite').animate({ width: (floor * 2) }, 'fast');
+    $scope.groupRecipes = function() {
+      $scope.groupedRecipes = $scope.groupByCount($scope.recipes, 3, $scope.matchesFilter);
     }
-
-    $scope.getWidth = function() {
-        return $(window).width();
-    };
-    $scope.$watch($scope.getWidth, resizeRecipes);
-    window.onresize = function(){
-        $scope.$apply();
-    }
-
-    setTimeout(resizeRecipes, 100);
 
     $scope.matchesFilter = function(recipe) {
         var filter = $scope.root.filter.trim().toLowerCase();

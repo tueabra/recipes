@@ -31,4 +31,21 @@ Recipes.run(function($rootScope) {
         else
             return img;
     }
+
+    /* Group `elements` into arrays with `amount` in each. */
+    $rootScope.groupByCount = function(elements, amount, filter) {
+        var output = [],
+            grp = [],
+            hit = 0;
+        for(var i in elements) {
+            if(filter(elements[i])) {
+                grp.push(elements[i]); 
+                if((++hit) % 3 == 0) {
+                    output.push(grp);
+                    grp = [];
+                }
+            }
+        }
+        return output;
+    }
 });

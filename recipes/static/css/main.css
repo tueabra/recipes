@@ -6,7 +6,27 @@ body {
 .recipe {
     position: relative;
 }
-.recipe > a {
+
+.recipe .star {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 32px;
+    height: 32px;
+    background: url(/static/images/star.png);
+}
+
+.recipe .untried {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: url(/static/images/exclamation-small.png);
+    z-index: 2;
+}
+
+.recipe a {
     height: 240px;
     margin: 4px;
     display: block;
@@ -57,4 +77,8 @@ body {
 
 .container {
     position: relative;
+}
+
+.row {
+    margin-bottom: 10px;
 }
