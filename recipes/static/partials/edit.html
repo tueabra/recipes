@@ -1,88 +1,99 @@
-<div id="actions">
-    <a href="#/" id="button-frontpage" title="Tilbage til forside"></a>
-    <a ng-show="recipe.id" href="#/recipe/{{ recipe.id }}" id="button-recipe" title="Tilbage til opskrift"></a>
-    <a ng-show="recipe.id" ng-click="Delete()" id="button-delete" title="Slet"></a>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a href="#/">Forside</a></li>
+          <li><a ng-show="recipe.id" href="#/recipe/{{ recipe.id }}">Opskrift</a></li>
+          <li><a ng-show="recipe.id" ng-click="Delete()">Slet</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="content">
+<div class="container">
 
-    <img ng-src="{{ temporaryImage || getImage(recipe, false) }}" class="recipe-image {{ recipe.image_orientation }}" style="cursor: pointer;" ng-click="uploadFile()" />
+    <img ng-src="{{ temporaryImage || getImage(recipe, false) }}" class="recipe-image hidden-phone" style="cursor: pointer;" ng-click="uploadFile()" />
     <input type="file" name="image" style="display: none;" />
 
-    <h1 ng-show="recipe.id">Redigér {{ recipe.name }}</h1>
-    <h1 ng-hide="recipe.id">Ny opskrift</h1>
+    <h2 ng-show="recipe.id">Redigér opskrift</h2>
+    <h2 ng-hide="recipe.id">Ny opskrift</h2>
 
-    <form name="recipeForm">
+    <form name="recipeForm" class="form-horizontal">
 
-    <table class="invisible">
+      <div class="control-group">
+        <label class="control-label" for="inputName">Navn</label>
+        <div class="controls">
+          <input type="text" name="name" ng-model="recipe.name" style="width: 400px;" />
+        </div>
+      </div>
 
-        <tr>
-            <th>Navn</th>
-            <td><input type="text" name="name" ng-model="recipe.name" /></td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputTags">Tags</label>
+        <div class="controls">
+          <div style="width: 400px;">
+            <span ng-repeat="tag in recipe.tags">
+                <input type="hidden" name="tag_id" ng-model="tag.id" />
+                <input style="width: 100px;" type="text" name="tag_name" placeholder="Tilføj tag..." ng-model="tag.name" ng-change="ensureEmptyInput('tags', ['name'], '[name=tag_name]');ensureCapitalized(tag, 'name')" auto-complete ui-autocomplete-url="/api/tag/"/>
+            </span>
+          </div>
+        </div>
+      </div>
 
-        <tr>
-            <th>Tags</th>
-            <td>
-              <div style="width: 500px;">
-                <span ng-repeat="tag in recipe.tags">
-                    <input type="hidden" name="tag_id" ng-model="tag.id" />
-                    <input type="text" name="tag_name" placeholder="Tilføj tag..." ng-model="tag.name" ng-change="ensureEmptyInput('tags', ['name'], '[name=tag_name]');ensureCapitalized(tag, 'name')" auto-complete ui-autocomplete-url="/api/tag/"/>
-                </span>
-              </div>
-            </td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputPersons">Antal personer</label>
+        <div class="controls">
+            <input type="number" name="persons" require-number ng-model="recipe.persons" style="width: 50px;" maxlength="3" />
+        </div>
+      </div>
 
-        <tr>
-            <th>Antal personer</th>
-            <td><input type="text" name="persons" require-number ng-model="recipe.persons" /><td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputTime">Tid</label>
+        <div class="controls">
+          <div ng-repeat="timing in recipe.timings">
+              <input type="hidden" name="timing_id" ng-model="timing.id" />
+              <input type="text" name="timing_description" ng-change="ensureEmptyInput('timings', ['minutes', 'description'], '[name=timing_description]');ensureCapitalized(timing, 'description')" ng-model="timing.description" auto-complete ui-autocomplete-url="/api/timing/" />:
+              <input type="number" name="timing_minutes" class="only-numbers" maxlength="3" style="width: 40px;" require-number ng-change="ensureEmptyInput('timings', ['minutes', 'description'], '[name=timing_description]')" ng-model="timing.minutes" /> minutter<br />
+          </div>
+          Total: {{ recipe.total_time() }} minutter
+        </div>
+      </div>
 
-        <tr>
-            <th>Tid</th>
-            <td>
-                <div ng-repeat="timing in recipe.timings">
-                    <input type="hidden" name="timing_id" ng-model="timing.id" />
-                    <input type="text" name="timing_description" ng-change="ensureEmptyInput('timings', ['minutes', 'description'], '[name=timing_description]');ensureCapitalized(timing, 'description')" ng-model="timing.description" auto-complete ui-autocomplete-url="/api/timing/" />:
-                    <input type="text" name="timing_minutes" class="only-numbers" maxlength="3" style="width: 30px;" require-number ng-change="ensureEmptyInput('timings', ['minutes', 'description'], '[name=timing_description]')" ng-model="timing.minutes" /> minutter<br />
-                </div>
-                Total: {{ recipe.total_time() }} minutter
-            </td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputIngredients">Ingredienser</label>
+        <div class="controls">
+          <div ng-repeat="ingredient in recipe.ingredients">
+              <input type="hidden" name="ingredient_id" ng-model="ingredient.id" />
+              Mængde <input type="text" name="ingredient_amount" style="width: 70px;" ng-change="ensureEmptyInput('ingredients', ['amount', 'name'], '[name=ingredient_amount]');" ng-model="ingredient.amount" />
+              af <input type="text" name="ingredient_name" ng-change="ensureEmptyInput('ingredients', ['amount', 'name'], '[name=ingredient_amount]');ensureCapitalized(ingredient, 'name')" ng-model="ingredient.name" auto-complete ui-autocomplete-url="/api/ingredient/" />
+          </div>
+        </div>
+      </div>
 
-        <tr>
-            <th>Ingredienser</th>
-            <td>
-                <div ng-repeat="ingredient in recipe.ingredients">
-                    <input type="hidden" name="ingredient_id" ng-model="ingredient.id" />
-                    Mængde <input type="text" name="ingredient_amount" style="width: 70px;" ng-change="ensureEmptyInput('ingredients', ['amount', 'name'], '[name=ingredient_amount]');" ng-model="ingredient.amount" />
-                    af <input type="text" name="ingredient_name" ng-change="ensureEmptyInput('ingredients', ['amount', 'name'], '[name=ingredient_amount]');ensureCapitalized(ingredient, 'name')" ng-model="ingredient.name" auto-complete ui-autocomplete-url="/api/ingredient/" />
-                </div>
-                {{ ingredients }}
-            </td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputRecipe">Opskrift</label>
+        <div class="controls">
+          <textarea cols="50" rows="7" name="recipe" ng-model="recipe.recipe"></textarea>
+        </div>
+      </div>
 
-        <tr>
-            <th>Opskrift</th>
-            <td><textarea cols="50" rows="7" name="recipe" ng-model="recipe.recipe"></textarea></td>
-        </tr>
+      <div class="control-group">
+        <label class="control-label" for="inputGarniture">Tilbehør</label>
+        <div class="controls">
+          <textarea cols="50" rows="3" name="garniture" ng-model="recipe.garniture"></textarea>
+          <br />
+          <b>Andre opskrifter:</b><br />
+          <div ng-repeat="garniture in garnitures">{{ garniture.name || garniture.label }} (<a ng-click="garnitures.splice($index, 1)">fjern</a>)</div>
+          <input type="text" name="reference_recipes" auto-complete ui-autocomplete-url="/api/garniture-recipes/" ui-autocomplete-add="garnitures" />
+        </div>
+      </div>
 
-        <tr>
-            <th>Tilbehør</th>
-            <td>
-              <textarea cols="50" rows="3" name="garniture" ng-model="recipe.garniture"></textarea>
-              <br />
-              <b>Andre opskrifter:</b>
-              <div ng-repeat="garniture in garnitures">{{ garniture.name || garniture.label }} (<a ng-click="garnitures.splice($index, 1)">fjern</a>)</div>
-              <input type="text" name="reference_recipes" auto-complete ui-autocomplete-url="/api/garniture-recipes/" ui-autocomplete-add="garnitures" />
-            </td>
-        </tr>
-
-        <tr>
-            <th>&nbsp;</th>
-            <td><input type="button" ng-click="Save()" value="Gem" /></td>
-        </tr>
-    </table>
+      <div class="control-group">
+        <div class="controls">
+          <input type="button" ng-click="Save()" value="Gem" />
+        </div>
+      </div>
 
     </form>
 

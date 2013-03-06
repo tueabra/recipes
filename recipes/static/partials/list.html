@@ -1,18 +1,31 @@
-<div id="actions">
-  <a href="#/add" id="button-add-recipe" title="Tilføj opskrift"></a>
-  <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" />
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#/">Recipes</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a href="#/add">Tilføj</a></li>
+        </ul>
+        <form class="navbar-form pull-right">
+          <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" />
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="content">
+<div class="container">
 
-  <a ng-repeat="recipe in recipes" ng-show="matchesFilter(recipe)" ng-class="{recipe: true, horizontal: recipe.image_orientation == 'horizontal', vertical: recipe.image_orientation != 'horizontal', favorite: recipe.favorite }" href="#/recipe/{{ recipe.id }}"
+  <div ng-repeat="recipe in recipes" ng-show="matchesFilter(recipe)" ng-class="{thumbnail: true, span3: true, recipe: true, favorite: recipe.favorite }">
+  <a class="" href="#/recipe/{{ recipe.id }}"
     data-total-time="{{ recipe.total_time() }}"
     ng-style="getImage(recipe)"
   >
-    <div class="name-streamer">
-      <div class="background"></div>
-      <div class="name">{{ recipe.name }}</div>
-    </div>
   </a>
+  <div class="name-streamer">
+    <div class="background"></div>
+    <div class="name">{{ recipe.name }}</div>
+  </div>
+  </div>
 
 </div>

@@ -1,85 +1,27 @@
-body, html {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #383736;
-    overflow: hidden;
-}
-body,html,table {
-    color: white;
-    font-family: Arial;
-    font-size: 10pt;
-}
-a {
-    color: white;
-    text-decoration: none;
-}
-h1 {
-    margin: 0 0 10px 0;
-    color: #EEE; 
-    border-bottom: 1px #803a3a solid;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
-}
-h2 {
-    color: #CCC;
-    border-bottom: 1px #5d5f72 solid;
-    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
-}
-h3 {
-    margin: 0 0 5px 0;
-    color: #DDD; 
-    border-bottom: 1px #5d5f72 solid;
-    
-}
-input {
-    border: black solid 1px;
-}
-#actions {
-    width: 100%;
-    background-color: #A8A598;
-    padding: 5px 5px 0 5px;
-    margin-right: 5px;
-    height: 34px;
-    border-bottom: black solid 1px;
-}
-
-#actions a {
-    width: 32px;
-    height: 32px;
-    display: inline-block;
-}
-
-#content {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: #383736;
+body {
+    padding-top: 60px;
+    overflow-y: scroll;
 }
 
 .recipe {
     position: relative;
-    cursor: pointer;
-    display: inline-block;
-    height: 240px;
-    width: 180px;
-    background-position: center center;
 }
-.recipe.favorite {
-    width: 360px;
+.recipe > a {
     height: 240px;
+    margin: 4px;
+    display: block;
+    background-position: center center;
 }
 
 .recipe .name-streamer {
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     text-align: center;
-    padding-top: 5px;
+    padding-top: 1px;
 }
+
 .recipe .name-streamer .background {
     background-color: black;
     position: absolute;
@@ -88,6 +30,8 @@ input {
     bottom: 0;
     right: 0;
     opacity: 0.6;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 .recipe:hover .name-streamer .background {
@@ -96,54 +40,21 @@ input {
 
 .recipe .name-streamer .name {
     color: white;
-    height: 35px;
+    height: 40px;
     font-weight: bold;
     position: relative;
     text-shadow: 1px 1px 0 rgba(100, 100, 100, 1)
 }
 
-table.invisible th {
-    text-align: left;
-    vertical-align: top;
-}
-table.invisible td {
-    padding-left: 10px;
-}
-table.invisible a {
-    color: #b82b2b;
-    font-weight: normal;
-}
-
-#button-add-recipe {
-    background: url(/static/images/plus.png);
-}
-#button-frontpage {
-    background: url(/static/images/home.png);
-}
-#button-recipe {
-    background: url(/static/images/recipe.png);
-}
-#button-edit {
-    background: url(/static/images/plus.png);
-}
-#button-delete {
-    background: url(/static/images/delete.png);
-}
-
 .recipe-image {
     position: absolute;
     right: 20px;
-    top: 50px;
+    top: 20px;
     border: black solid 1px;
     background-position: center center;
+    max-width: 300px;
 }
 
-#filter {
-    float: right;
-    margin-right: 10px;
-    width: 300px;
-    height: 25px;
-    border-radius: 5px;
-    padding-left: 5px;
-    background-color: #E6E6E6;
+.container {
+    position: relative;
 }
