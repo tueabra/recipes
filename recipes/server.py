@@ -23,7 +23,11 @@ app.config['DEBUG'] = True
 app.config['SERVER_HOST'] = '0.0.0.0'
 app.config['SERVER_PORT'] = 5000
 app.config['DATABASE'] = 'sqlite:///recipes.db'
-app.config.from_object('settings')
+app.config['LANGUAGE'] = 'en'
+try:
+    app.config.from_object('settings')
+except ImportError:
+    pass
 
 if app.config['DEBUG']:
     from werkzeug import SharedDataMiddleware
@@ -195,7 +199,7 @@ def api_image_preview():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', language=app.config['LANGUAGE'])
 
 if __name__ == '__main__':
 

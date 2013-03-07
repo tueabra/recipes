@@ -4,7 +4,7 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-var Recipes = angular.module('Recipes', ['Recipes.services', 'Recipes.directives']).
+var Recipes = angular.module('Recipes', ['Recipes.services', 'Recipes.directives', 'Recipes.filters']).
 
     /* URL Routing */
     config(['$routeProvider', function($routeProvider) {

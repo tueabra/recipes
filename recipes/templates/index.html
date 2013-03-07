@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html ng-app="Recipes">
-    <head>
-        <title>Recipes</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/static/css/main.css" type="text/css" /> 
-        <link rel="stylesheet" href="/static/css/smoothness/jquery-ui-1.8.13.custom.css" type="text/css" /> 
-        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-        <script type="text/javascript" src="/static/lib/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="/static/lib/jquery-ui-1.8.13.custom.min.js"></script>
-    </head>
-    <body>
+  <head>
+    <title>{{ '{{' }} "Recipe Database" | translate {{ '}}' }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css" /> 
+    <link rel="stylesheet" href="/static/css/smoothness/jquery-ui-1.8.13.custom.css" type="text/css" /> 
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/locales/{{ language }}.js"></script>
+    <script type="text/javascript" src="/static/lib/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/static/lib/jquery-ui-1.8.13.custom.min.js"></script>
+  </head>
+  <body>
+    <div ng-view></div>
 
-        <div ng-view></div>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 
-        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/lib/angular.js"></script>
+    <script type="text/javascript" src="/static/lib/angular-resource.js"></script>
 
-        <script type="text/javascript" src="/static/lib/angular.js"></script>
-        <script type="text/javascript" src="/static/lib/angular-resource.js"></script>
-
-        <script type="text/javascript" src="/static/js/app.js"></script>
-        <script type="text/javascript" src="/static/js/services.js"></script>
-        <script type="text/javascript" src="/static/js/controllers.js"></script>
-        <script type="text/javascript" src="/static/js/directives.js"></script>
-    </body>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+    <script type="text/javascript" src="/static/js/services.js"></script>
+    <script type="text/javascript" src="/static/js/controllers.js"></script>
+    <script type="text/javascript" src="/static/js/directives.js"></script>
+    <script type="text/javascript" src="/static/js/filters.js"></script>
+  </body>
 </html>
-

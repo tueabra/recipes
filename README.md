@@ -4,8 +4,6 @@ recipes is a simple to-the-point recipe database, slightly optimized for tablet 
 
 Please note that is a very simple project, written for personal use only.
 
-All the text is currently in danish.
-
 ## Set up
 
 Clone the repository:

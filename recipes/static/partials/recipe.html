@@ -3,17 +3,17 @@
     <div class="container">
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li><a href="#/">Forside</a></li>
-          <li><a href="#/recipe/{{ recipe.id }}/edit">Redigér</a></li>
+          <li><a href="#/">{{ "Frontpage" | translate }}</a></li>
+          <li><a href="#/recipe/{{ recipe.id }}/edit">{{ "Edit" | translate }}</a></li>
         </ul>
         <ul class="nav pull-right">
           <li><a ng-click="toggleFavorite()" style="font-size: 10px;">
-            <span ng-hide="recipe.favorite">Ikke favorit</span>
-            <span ng-show="recipe.favorite" class="text-success">Favorit</span>
+            <span ng-hide="recipe.favorite">{{ "Not favorite" | translate }}</span>
+            <span ng-show="recipe.favorite" class="text-success">{{ "Favorite" | translate }}</span>
           </a></li>
           <li><a ng-click="toggleTried()" style="font-size: 10px;">
-            <span ng-hide="recipe.has_tried" class="text-error">Ikke prøvet</span>
-            <span ng-show="recipe.has_tried" class="text-success">Prøvet</span>
+            <span ng-hide="recipe.has_tried" class="text-error">{{ "Not tried" | translate }}</span>
+            <span ng-show="recipe.has_tried" class="text-success">{{ "Tried" | translate }}</span>
           </a></li>
         </ul>
       </div>
@@ -36,40 +36,40 @@
 
 
     <div ng-show="recipe.persons">
-        <b>Antal personer:</b> {{ recipe.persons }}<br />
+      <b>{{ "Persons" | translate }}:</b> {{ recipe.persons }}<br />
     </div>
 
     <div ng-show="recipe.timings">
-        <b>Tid:</b> (samlet: <b>{{ recipe.total_time() }}</b> minutter)<br />
-        <div ng-repeat="timing in recipe.timings">
-            {{ timing.description }}: {{ timing.minutes }} minutter
-        </div>
+      <b>{{ "Time" | translate }}:</b> ({{ "total" | translate }}: <b>{{ recipe.total_time() }}</b> {{ "minutes" | translate }})<br />
+      <div ng-repeat="timing in recipe.timings">
+        {{ timing.description }}: {{ timing.minutes }} {{ "minutes" | translate }}
+      </div>
     </div>
 
     <div ng-show="recipe.ingredients">
-        <h3>Ingredienser</h3>
-        <div ng-repeat="ingredient in recipe.ingredients">{{ ingredient.amount }} {{ ingredient.name }}</div>
+      <h3>{{ "Ingredients" | translate }}</h3>
+      <div ng-repeat="ingredient in recipe.ingredients">{{ ingredient.amount }} {{ ingredient.name }}</div>
     </div>
 
     <div ng-show="recipe.recipe">
-        <h3>Opskrift</h3>
-        <pre>{{ recipe.recipe }}</pre>
+      <h3>{{ "Recipe" | translate }}</h3>
+      <pre>{{ recipe.recipe }}</pre>
     </div>
 
     <div ng-show="recipe.garniture || garnitures">
-        <h3>Tilbehør</h3>
-        <pre>{{ recipe.garniture }}</pre>
-        <div ng-repeat="garniture in garnitures">
-          <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
-        </div>
+      <h3>{{ "Garniture" | translate }}</h3>
+      <pre>{{ recipe.garniture }}</pre>
+      <div ng-repeat="garniture in garnitures">
+        <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
+      </div>
     </div>
 
     <br />
     <div ng-show="as_garniture">
-        <h4>Kan bruges som tilbehør til</h4>
-        <div ng-repeat="garniture in as_garniture">
-          <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
-        </div>
+      <h4>{{ "Can be used for" | translate }}</h4>
+      <div ng-repeat="garniture in as_garniture">
+        <a href="#/recipe/{{ garniture.id }}">{{ garniture.name }}</a>
+      </div>
     </div>
 
 </div>

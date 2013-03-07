@@ -1,13 +1,13 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#/">Recipes</a>
+      <a class="brand" href="#/">{{ "Recipes" | translate }}</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li><a href="#/add">Tilføj</a></li>
+          <li><a href="#/add">{{ "Add" | translate }}</a></li>
         </ul>
         <form class="navbar-form pull-right">
-          <input type="text" id="filter" placeholder="Filter..." autofocus="autofocus" ng-model="root.filter" ng-change="groupRecipes()" />
+          <input type="text" id="filter" placeholder="{{ 'Filter...' | translate }}" autofocus="autofocus" ng-model="root.filter" ng-change="groupRecipes()" />
         </form>
       </div>
     </div>
@@ -19,8 +19,8 @@
   <div class="row" ng-repeat="group in groupedRecipes">
     <div ng-repeat="recipe in group" ng-show="matchesFilter(recipe)" class="span4 recipe">
       <div class="thumbnail">
-        <div ng-show="recipe.favorite" class="star" title="Favorit"></div>
-        <div ng-hide="recipe.has_tried" class="untried" title="Ikke prøvet"></div>
+        <div ng-show="recipe.favorite" class="star" title="{{ 'Favorite' | translate }}"></div>
+        <div ng-hide="recipe.has_tried" class="untried" title="{{ 'Not tried' | translate }}"></div>
         <a class="" href="#/recipe/{{ recipe.id }}"
           data-total-time="{{ recipe.total_time() }}"
           ng-style="getImage(recipe)"
