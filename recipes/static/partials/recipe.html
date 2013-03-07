@@ -1,29 +1,27 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li><a href="#/">{{ "Frontpage" | translate }}</a></li>
-          <li><a href="#/recipe/{{ recipe.id }}/edit">{{ "Edit" | translate }}</a></li>
-        </ul>
-        <ul class="nav pull-right">
-          <li><a ng-click="toggleFavorite()" style="font-size: 10px;">
-            <span ng-hide="recipe.favorite">{{ "Not favorite" | translate }}</span>
-            <span ng-show="recipe.favorite" class="text-success">{{ "Favorite" | translate }}</span>
-          </a></li>
-          <li><a ng-click="toggleTried()" style="font-size: 10px;">
-            <span ng-hide="recipe.has_tried" class="text-error">{{ "Not tried" | translate }}</span>
-            <span ng-show="recipe.has_tried" class="text-success">{{ "Tried" | translate }}</span>
-          </a></li>
-        </ul>
-      </div>
+      <ul class="nav">
+        <li><a href="#/">{{ "Frontpage" | translate }}</a></li>
+        <li><a href="#/recipe/{{ recipe.id }}/edit">{{ "Edit" | translate }}</a></li>
+      </ul>
+      <ul class="nav pull-right">
+        <li><a ng-click="toggleFavorite()" style="font-size: 10px;">
+          <span ng-hide="recipe.favorite">{{ "Not favorite" | translate }}</span>
+          <span ng-show="recipe.favorite" class="text-success">{{ "Favorite" | translate }}</span>
+        </a></li>
+        <li><a ng-click="toggleTried()" style="font-size: 10px;">
+          <span ng-hide="recipe.has_tried" class="text-error">{{ "Not tried" | translate }}</span>
+          <span ng-show="recipe.has_tried" class="text-success">{{ "Tried" | translate }}</span>
+        </a></li>
+      </ul>
     </div>
   </div>
 </div>
 
 <div class="container">
 
-    <img ng-show="recipe.image" ng-src="{{ getImage(recipe, false) }}" class="recipe-image" />
+    <img ng-show="recipe.image" ng-src="{{ getImage(recipe, false) }}" class="recipe-image visible-desktop" />
 
     <div class="page-header">
       <h1>

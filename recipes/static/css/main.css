@@ -82,3 +82,7 @@ body {
 .row {
     margin-bottom: 10px;
 }
+
+pre {
+    word-break: normal;
+}

@@ -1,13 +1,11 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li><a href="#/">{{ "Frontpage" | translate }}</a></li>
-          <li><a ng-show="recipe.id" href="#/recipe/{{ recipe.id }}">{{ "Recipe" | translate }}</a></li>
-          <li><a ng-show="recipe.id" ng-click="Delete()">{{ "Delete" | translate }}</a></li>
-        </ul>
-      </div>
+      <ul class="nav">
+        <li><a href="#/">{{ "Frontpage" | translate }}</a></li>
+        <li><a ng-show="recipe.id" href="#/recipe/{{ recipe.id }}">{{ "Recipe" | translate }}</a></li>
+        <li><a ng-show="recipe.id" ng-click="Delete()">{{ "Delete" | translate }}</a></li>
+      </ul>
     </div>
   </div>
 </div>
