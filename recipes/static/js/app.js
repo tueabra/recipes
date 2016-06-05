@@ -22,7 +22,7 @@ Recipes.run(function($rootScope) {
         as_object = typeof(as_object) == 'undefined' ? true : as_object;
         var none = '/static/images/no-image.gif';
         try {
-            var img = (recipe.image ? '/static/media/'+recipe.image : none);
+            var img = (recipe.image ? Settings.aws_root+recipe.image : none);
         } catch(err) {
             var img = none;
         }
@@ -46,6 +46,7 @@ Recipes.run(function($rootScope) {
                 }
             }
         }
+        if(grp.length) output.push(grp);
         return output;
     }
 });

@@ -1,5 +1,9 @@
 import os
 import sys
+import tempfile
+
+import boto3
+from botocore.client import Config
 
 from PIL import Image, ImageOps
 
@@ -34,6 +38,13 @@ if app.config['DEBUG']:
     app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
         '/static/': STATIC_DIR,
     })
+
+# AWS SETUP
+
+AWS_CONFIG = Config(
+    signature_version='s3v4',
+    region_name=app.config['AWS_REGION'],
+)
 
 # SQLALCHEMY TABLES
 
@@ -162,17 +173,25 @@ def api_set_image():
     recipe = Recipe.query.filter_by(id=request.form['id']).first()
 
     f = request.files['image']
-    filename = 'recipe-%s%s' % (recipe.id, os.path.splitext(f.filename)[-1])
-    filepath = os.path.join(STATIC_DIR, 'media', filename)
-    f.save(filepath)
+    tmp = tempfile.NamedTemporaryFile()
+    f.save(tmp.name)
 
-    img = Image.open(filepath)
+    img = Image.open(tmp.name)
     scale = float(img.size[0]) / float(img.size[1])
     is_horizontal = scale > 1
 
     img = _resize_image(img)
 
-    img.save(filepath, 'png')
+    img.save(tmp.name, 'png')
+
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id=app.config['AWS_ACCESS_KEY'],
+        aws_secret_access_key=app.config['AWS_SECRET_KEY'],
+        config=AWS_CONFIG,
+    )
+    filename = 'recipe-%s%s' % (recipe.id, os.path.splitext(f.filename)[-1])
+    s3.upload_file(tmp.name, app.config['AWS_BUCKET'], filename)
 
     recipe.image = filename
     recipe.image_orientation = 'horizontal' if is_horizontal else 'vertical'
@@ -199,7 +218,11 @@ def api_image_preview():
 
 @app.route('/')
 def index():
-    return render_template('index.html', language=app.config['LANGUAGE'])
+    return render_template(
+        'index.html',
+        language=app.config['LANGUAGE'],
+        aws_root=app.config['AWS_ROOT'],
+    )
 
 if __name__ == '__main__':
 

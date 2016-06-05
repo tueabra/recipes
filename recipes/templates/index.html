@@ -10,6 +10,11 @@
     <script type="text/javascript" src="/static/locales/{{ language }}.js"></script>
     <script type="text/javascript" src="/static/lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="/static/lib/jquery-ui-1.8.13.custom.min.js"></script>
+    <script>
+      var Settings = {
+        aws_root: '{{ aws_root}}'
+      };
+    </script>
   </head>
   <body>
     <div ng-view></div>
